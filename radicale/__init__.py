@@ -446,6 +446,7 @@ class Application(object):
         headers = {
             "Content-Type": collection.mimetype,
             "Last-Modified": collection.last_modified,
+            "Content-Disposition": "attachment; filename=" + collection.name,
             "ETag": etag}
         answer = answer_text.encode(self.encoding)
         return client.OK, headers, answer
