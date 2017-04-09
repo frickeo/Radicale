@@ -149,25 +149,25 @@ class Component(Item):
 class Event(Component):
     """Internal event class."""
     tag = "VEVENT"
-    mimetype = "text/calendar"
+    mimetype = "text/calendar; charset=utf-8"
 
 
 class Todo(Component):
     """Internal todo class."""
     tag = "VTODO"  # pylint: disable=W0511
-    mimetype = "text/calendar"
+    mimetype = "text/calendar; charset=utf-8"
 
 
 class Journal(Component):
     """Internal journal class."""
     tag = "VJOURNAL"
-    mimetype = "text/calendar"
+    mimetype = "text/calendar; charset=utf-8"
 
 
 class Card(Component):
     """Internal card class."""
     tag = "VCARD"
-    mimetype = "text/vcard"
+    mimetype = "text/vcard; charset=utf-8"
 
 
 class Collection(object):
@@ -380,7 +380,7 @@ class Collection(object):
         """Set the mimetype of the collection."""
         with self.props as props:
             if "tag" not in props:
-                if mimetype == "text/vcard":
+                if mimetype == "text/vcard" or mimetype == "text/vcard; charset=utf-8":
                     props["tag"] = "VADDRESSBOOK"
                 else:
                     props["tag"] = "VCALENDAR"
@@ -408,9 +408,9 @@ class Collection(object):
     def mimetype(self):
         """Mimetype of the collection."""
         if self.tag == "VADDRESSBOOK":
-            return "text/vcard"
+            return "text/vcard; charset=utf-8"
         elif self.tag == "VCALENDAR":
-            return "text/calendar"
+            return "text/calendar; charset=utf-8"
 
     @property
     def resource_type(self):
