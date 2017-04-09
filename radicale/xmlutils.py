@@ -43,6 +43,7 @@ except ImportError:
 # pylint: enable=F0401,E0611
 
 import re
+import urllib
 import xml.etree.ElementTree as ET
 
 from . import client, config, ical
@@ -501,6 +502,8 @@ def report(path, xml_request, collection):
     collection_timezones = collection.timezones
 
     for hreference in hreferences:
+        # make sure everything is unquoted (like %40 -> @)
+        hreference = urllib.unquote(hreference)
         # Check if the reference is an item or a collection
         name = name_from_path(hreference, collection)
         if name:
