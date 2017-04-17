@@ -49,11 +49,12 @@ def open(path, mode="r"):
     """Open a file at ``path`` with encoding set in the configuration."""
     # On enter
     abs_path = os.path.join(FOLDER, path.replace("/", os.sep))
+    abs_path = os.path.realpath(abs_path)
     with codecs.open(abs_path, mode, config.get("encoding", "stock")) as fd:
         yield fd
     # On exit
     if GIT_REPOSITORY and mode == "w":
-        path = os.path.relpath(abs_path, FOLDER)
+        path = os.path.relpath(abs_path, os.path.realpath(FOLDER))
         GIT_REPOSITORY.stage([path])
         committer = config.get("git", "committer")
         GIT_REPOSITORY.do_commit(
